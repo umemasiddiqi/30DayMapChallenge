@@ -1,8 +1,8 @@
 ##################################
-### 30 Day Map Challenge  ########
-###      Nov 1, 2023.     ########
-###      Day 1: Points    ########
-####    Umema A. Siddiqi #########
+### 30 Day Map Challenge       ###
+###      Nov 1, 2023.          ###
+###      Day 1: Points         ###
+####    Umema A. Siddiqi       ###
 ##################################
 
 # libraries ---------------------------------------------------------------
@@ -50,7 +50,7 @@ ggplot() +
   geom_sf(data = map_df, size = 0.09, color = "darkgreen") +
   coord_sf() +
   theme_void() +
-  theme(plot.caption = element_text(family = font, hjust = 0.9, size = 3.5, color = "darkblue", margin = margin(t = 25)),
+  theme(plot.caption = element_text(family = font, hjust = 0.9, size = 7.5, color = "darkblue", margin = margin(t = 25)),
         plot.caption.position = "plot",
         plot.margin = unit(c(0.5, 0.5, 0, 0.5), "cm"),
         panel.background = element_rect(color = NA, fill = "#f7f7f5"),
@@ -58,4 +58,4 @@ ggplot() +
   labs(caption = "#30DayMapChallenge | Day 1: Points | Design: U. Siddiqi")
 
 # save plot ---------------------------------------------------------------
-ggsave(paste0("us_neg_points_", format(Sys.time(), "%d%m%Y"), ".png"), dpi = 320, width = 6, height = 6)
+ggsave(paste0("pak_points_", format(Sys.time(), "%d%m%Y"), ".png"), dpi = 320, width = 6, height = 6)
