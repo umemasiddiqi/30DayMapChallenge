@@ -1,0 +1,58 @@
+##################################
+### 30 Day Map Challenge  ########
+###      Nov 2, 2023.     ########
+###      Day 2: Lines    ########
+####    Umema A. Siddiqi #########
+##################################
+
+# Datafiles retrieved from https://data.humdata.org/dataset/hotosm_pak_roads?
+
+# Load required libraries -------------------------------------------
+library(sf)
+library(ggplot2)
+
+# Load the road network data for Pakistan ---------------------------
+Pakistan_roads <- st_read("C:/Users/uy128/Downloads/hotosm_pak_roads_lines_shp")
+
+# Get the number of features (rows) ---------------------------------
+num_features <- nrow(Pakistan_roads)
+
+# Get the number of fields (columns) --------------------------------
+num_fields <- ncol(Pakistan_roads)
+
+# Get the field names -----------------------------------------------
+field_names <- names(Pakistan_roads)
+
+# Print the extracted information -----------------------------------
+cat("Number of features: ", num_features, "\n")
+cat("Number of fields: ", num_fields, "\n")
+cat("Field names: ", paste(field_names, collapse = ", "), "\n")
+
+# Create a thematic map of Pakistan road lines ----------------------
+ggplot() +
+  geom_sf(data = Pakistan_roads, color = "lightblue", size = 0.5) +
+  labs(title = "#30DayMapChallenge | Day 2: Lines | Design: U. Siddiqi") +
+  theme_minimal()
+
+# save plot --------------------------------------------------------
+ggsave(paste0("pak_roads", format(Sys.time(), "%d%m%Y"), ".png"), dpi = 320, width = 6, height = 6)
+
+# The above code block will yield a simple road network
+# The code block below segregates the road network into motorways, primary, secondary, tertiary and residential roads
+
+# Create a thematic map of Pakistani road lines based on road type ----------
+ggplot() +
+  geom_sf(data = Pakistan_roads, aes(color = highway), size = 1) +
+  scale_color_manual(values = c(
+    "motorway" = "red",
+    "primary" = "lightgreen",
+    "secondary" = "yellow",
+    "tertiary" = "pink",
+    "residential" = "brown"
+  )) +
+  labs(title = "#30DayMapChallenge | Day 2: Lines | Design: U. Siddiqi") +
+  theme_minimal()
+
+# save plot --------------------------------------------------------
+ggsave(paste0("pak_road_type", format(Sys.time(), "%d%m%Y"), ".png"), dpi = 320, width = 6, height = 6)
+
