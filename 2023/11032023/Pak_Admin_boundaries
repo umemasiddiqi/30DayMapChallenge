@@ -5,27 +5,28 @@
 ####    Umema A. Siddiqi #########
 ##################################
 
-# Load required libraries --------------------------------------------------------------------
+# Load required libraries ---------------------------------------------------
 
 library(sf)
 library(dplyr)
 library(ggplot2)
 
-# Data extracted from -------------------------------------------------------------------------
+# Data extracted from -------------------------------------------------------
 # https://geodata.lib.utexas.edu/catalog/stanford-gk656fb4690
 
-# Load the dataset for Pakistan -----------------------------------------------------------
+# Load the dataset data for Pakistan ------------------------------------
 Pak_data <- st_read("C:/Users/uy128/Downloads/data (2)")
 
-# First, change the variable name from NAME_1 to Provinces
-names(Pak_data)[names(Pak_data) == "NAME_1"] <- "Provinces"
+# First, change the variable name from NAME_1 to Administrative Units
+names(Pak_data)[names(Pak_data) == "NAME_1"] <- "Administrative_Units"
 
-# Then, replace "N.W.F.P." with "Khyber Pakhtunkhwa" in the Provinces column
-Pak_data$Provinces[Pak_data$Provinces == "N.W.F.P."] <- "Khyber Pakhtunkhwa"
+# Then, replace "N.W.F.P." with "Khyber Pakhtunkhwa" and F.C.T. with Fed Cap Territory in the Provinces column
+Pak_data$Administrative_Units[Pak_data$Administrative_Units == "N.W.F.P."] <- "Khyber Pakhtunkhwa"
+Pak_data$Administrative_Units[Pak_data$Administrative_Units == "F.C.T."] <- "Federal Capital Territory"
 
 # Create a map with district boundaries segregated by province color ----------------------------
 ggplot() +
-  geom_sf(data = Pak_data, aes(color = Provinces) , size = 0.5) +
+  geom_sf(data = Pak_data, aes(color = Administrative_Units) , size = 0.5) +
   scale_color_manual(values = c(
     "Punjab" = "darkblue",
     "Sind" = "darkgreen",
@@ -34,11 +35,11 @@ ggplot() +
     "Azad Kashmir" = "orange",
     "GILGIT AGENCY" = "brown",
     "Northern Areas" = "grey",
-    "F.C.T." = "red"
+    "Federal Capital Territory" = "red"
   )) +
   labs(title = "#30DayMapChallenge | Day 3: Polygons | Design: U. Siddiqi") +
   theme_minimal()
 
-# save plot ---------------------------------------------------------------------------------------
+# save plot --------------------------------------------------------
 ggsave(paste0("Pak_data", format(Sys.time(), "%d%m%Y"), ".png"), dpi = 320, width = 6, height = 6)
 
