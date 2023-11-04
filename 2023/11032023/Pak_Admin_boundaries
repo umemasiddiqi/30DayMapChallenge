@@ -1,0 +1,44 @@
+##################################
+### 30 Day Map Challenge  ########
+###      Nov 3, 2023.     ########
+###      Day 3: Polygon    ########
+####    Umema A. Siddiqi #########
+##################################
+
+# Load required libraries --------------------------------------------------------------------
+
+library(sf)
+library(dplyr)
+library(ggplot2)
+
+# Data extracted from -------------------------------------------------------------------------
+# https://geodata.lib.utexas.edu/catalog/stanford-gk656fb4690
+
+# Load the dataset for Pakistan -----------------------------------------------------------
+Pak_data <- st_read("C:/Users/uy128/Downloads/data (2)")
+
+# First, change the variable name from NAME_1 to Provinces
+names(Pak_data)[names(Pak_data) == "NAME_1"] <- "Provinces"
+
+# Then, replace "N.W.F.P." with "Khyber Pakhtunkhwa" in the Provinces column
+Pak_data$Provinces[Pak_data$Provinces == "N.W.F.P."] <- "Khyber Pakhtunkhwa"
+
+# Create a map with district boundaries segregated by province color ----------------------------
+ggplot() +
+  geom_sf(data = Pak_data, aes(color = Provinces) , size = 0.5) +
+  scale_color_manual(values = c(
+    "Punjab" = "darkblue",
+    "Sind" = "darkgreen",
+    "Khyber Pakhtunkhwa" = "lightpink",
+    "Balochistan" = "black",
+    "Azad Kashmir" = "orange",
+    "GILGIT AGENCY" = "brown",
+    "Northern Areas" = "grey",
+    "F.C.T." = "red"
+  )) +
+  labs(title = "#30DayMapChallenge | Day 3: Polygons | Design: U. Siddiqi") +
+  theme_minimal()
+
+# save plot ---------------------------------------------------------------------------------------
+ggsave(paste0("Pak_data", format(Sys.time(), "%d%m%Y"), ".png"), dpi = 320, width = 6, height = 6)
+
